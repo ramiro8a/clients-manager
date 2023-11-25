@@ -1,7 +1,8 @@
 package com.clients.app.config;
 
 import com.clients.commons.api.ApiError;
-import com.clients.commons.api.constants.ErrorMsg;
+import com.clients.commons.constants.ErrorMsg;
+import com.clients.commons.exceptions.ProviderException;
 import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,11 +33,10 @@ public class RestExceptionHandler {
         return buildResponseEntity(new ApiError(ErrorMsg.VALIDATE_REQUEST.getCod(), ErrorMsg.VALIDATE_REQUEST.getMsj(), HttpStatus.valueOf(ex.status())));
     }
 
-/*    @ExceptionHandler(ProviderException.class)
+    @ExceptionHandler(ProviderException.class)
     protected ResponseEntity<Object> handleMethodProviderException(ProviderException ex) {
-        logPrinter.write(ex);
-        return buildResponseEntity(new ApiError(ex.getMensaje(),ex.getMensajeTec(), ex.getCodigo(), ex.getStatus()));
-    }*/
+        return buildResponseEntity(new ApiError(ex.getCode(), ex.getMensaje(), HttpStatus.NOT_ACCEPTABLE));
+    }
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleMethodBadException(Exception ex) {
