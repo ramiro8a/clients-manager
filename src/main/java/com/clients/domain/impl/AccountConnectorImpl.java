@@ -25,7 +25,6 @@ public class AccountConnectorImpl implements AccountConnector {
     public CuentaResponse creaCuentaError(ClienteRequest request, Throwable throwable){
         if(throwable.getCause() instanceof ConnectException)
             throw new ProviderException("00011", "El servidor de cunetas no esta disponible");
-
         return null;
     }
 }
