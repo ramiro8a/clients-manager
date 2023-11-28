@@ -11,6 +11,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ public class ClienteController {
     private ClientService service;
 
     @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE })
+    @PreAuthorize("hasAuthority('CREA_CLIENTES')")
     public ResponseEntity<ClienteResponse> crea(
             @Valid @RequestBody ClienteRequest request
     ){

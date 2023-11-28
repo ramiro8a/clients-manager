@@ -22,9 +22,9 @@ public class AccountConnectorImpl implements AccountConnector {
     public CuentaResponse creaCuenta(CuentaRequest request) {
         return accounts.creaCuenta(request);
     }
-    public CuentaResponse creaCuentaError(ClienteRequest request, Throwable throwable){
+    public CuentaResponse creaCuentaError(CuentaRequest request, Throwable throwable){
         if(throwable.getCause() instanceof ConnectException)
             throw new ProviderException("00011", "El servidor de cunetas no esta disponible");
-        return null;
+        throw new ProviderException("00014", "El servidor no quiere contestar");
     }
 }
