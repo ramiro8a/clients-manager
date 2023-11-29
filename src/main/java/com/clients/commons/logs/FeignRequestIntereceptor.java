@@ -25,7 +25,7 @@ public class FeignRequestIntereceptor implements RequestInterceptor {
         });
         ApiRequestLog requestLog = ApiRequestLog.builder()
                 .inData(LocalDateTime.now())
-                .path(requestTemplate.feignTarget().url())
+                .path(requestTemplate.feignTarget().url()+requestTemplate.path())
                 .method(requestTemplate.method())
                 .headers(headers.toString())
                 .queryParams(queryParams.toString())

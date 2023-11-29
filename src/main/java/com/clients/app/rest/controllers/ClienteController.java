@@ -30,12 +30,12 @@ public class ClienteController {
     @Autowired
     private ClientService service;
 
+    //@PreAuthorize("hasAuthority('CREA_CLIENTE')")
     @PostMapping(path = "", produces = {MediaType.APPLICATION_JSON_VALUE })
-    @PreAuthorize("hasAuthority('CREA_CLIENTES')")
     public ResponseEntity<ClienteResponse> crea(
             @Valid @RequestBody ClienteRequest request
     ){
-        log.error("TEST-VALUE {}", testValue);
+        //log.error("TEST-VALUE {}", testValue);
         return new ResponseEntity<>(service.crea(request), HttpStatus.CREATED);
     }
 }

@@ -22,10 +22,12 @@ public class LggingFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        String uuid = UUID.randomUUID().toString();
-        httpServletRequest.setAttribute(Const.REQUEST_ID, uuid);
+        String requestId = httpServletRequest.getHeader(Const.REQUEST_ID);
+        if(requestId==null)
+            requestId = UUID.randomUUID().toString();
+        httpServletRequest.setAttribute(Const.REQUEST_ID, requestId);
         ApiRequestLog apiRequestLog = ApiRequestLog.builder()
-                .requestId(uuid)
+                .requestId(requestId)
                 .inData(LocalDateTime.now())
                 .path(httpServletRequest.getRequestURI())
                 .method(httpServletRequest.getMethod())
