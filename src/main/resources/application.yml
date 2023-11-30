@@ -17,6 +17,16 @@ spring:
       label: master
   config:
     import: optional:configserver:http://localhost:8021
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: event:com.clients.domain.service.event.ClienteEvent
 ---
 management:
   endpoints.web.exposure.include:
