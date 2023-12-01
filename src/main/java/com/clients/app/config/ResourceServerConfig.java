@@ -19,7 +19,9 @@ public class ResourceServerConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
+                        .anyRequest().authenticated())
                 .oauth2ResourceServer( oAuth2 -> oAuth2
                         .jwt(it -> it.decoder(JwtDecoders.fromIssuerLocation(issuer))))
                 .build();

@@ -5,7 +5,9 @@ import com.clients.commons.constants.Const;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.Enumeration;
 import java.util.UUID;
 
+@Slf4j
+//@Order(HIg)
 @Component
 public class LggingFilter implements Filter {
     @Autowired
@@ -23,6 +27,7 @@ public class LggingFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         String requestId = httpServletRequest.getHeader(Const.REQUEST_ID);
+        log.info("X-Powered-By: {}", httpServletRequest.getHeader("X-Powered-By"));
         if(requestId==null)
             requestId = UUID.randomUUID().toString();
         httpServletRequest.setAttribute(Const.REQUEST_ID, requestId);
@@ -45,7 +50,7 @@ public class LggingFilter implements Filter {
             headers.append("[");
             headers.append(key);
             headers.append(":");
-            headers.append(httpServletRequest.getHeaders(key));
+            headers.append(httpServletRequest.getHeaders(key).toString());
             headers.append("]");
         }
         return headers.toString();
